@@ -1,50 +1,42 @@
-# React + TypeScript + Vite
+# Custom Dashboards Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a **Custom Dashboards** project built using React, TypeScript, Tailwind CSS, and React Router. The application allows users to view, create, edit, and delete custom dashboards. It also includes features like centered tables, styled buttons, and links for actions.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **View Dashboards**: List all available dashboards in a clean and professional table layout.
+- **Add New Dashboard**: Create a new custom dashboard using the form.
+- **Edit Dashboard**: Modify existing dashboards by clicking the "Edit" link.
+- **Delete Dashboard**: Remove unwanted dashboards using the "Delete" button.
+- **Responsive Design**: The layout is responsive, ensuring it works on both desktop and mobile devices.
 
-## Expanding the ESLint configuration
+## Technologies Used
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **React**: JavaScript library for building user interfaces.
+- **TypeScript**: Superset of JavaScript that adds static types.
+- **Tailwind CSS**: A utility-first CSS framework used for styling the application.
+- **React Router**: Enables navigation between different views in the application.
 
-- Configure the top-level `parserOptions` property like this:
+## Getting Started
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+### Prerequisites
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+Make sure you have the following installed:
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+- **Node.js** (>=14.0.0)
+- **npm** (comes with Node.js) or **yarn**
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https:.......
+   cd custom-dashboards
+2. install dependencies
+      npm install
+
+
+### Running the APP
+npm run dev
+
