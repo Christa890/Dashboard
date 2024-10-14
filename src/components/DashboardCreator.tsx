@@ -96,6 +96,10 @@ const DashboardCreator: React.FC = () => {
 
   // Function to add a new chart to the layout
   const addChart = () => {
+    if (!chartType) {
+      alert("Please select a chart type!");
+      return; // Prevent adding a chart if no type is selected
+    }
     const newChartId = `chart-${layout.length + 1}`;
     setLayout([
       ...layout,
