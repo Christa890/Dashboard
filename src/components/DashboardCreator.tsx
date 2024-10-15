@@ -35,7 +35,7 @@ const DashboardCreator: React.FC = () => {
   const [name, setName] = useState("");
   const [showModal, setShowModal] = useState(false); // State to control modal visibility
   const [selectedChartType, setSelectedChartType] = useState(""); // Selected chart type
-  const [chartData, setChartData] = useState<number[]>([]); // Store data from modal
+//  const [chartData, setChartData] = useState<number[]>([]); // Store data from modal
   const dashboardRef = useRef<HTMLDivElement>(null); 
 
   useEffect(() => {
