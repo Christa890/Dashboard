@@ -123,8 +123,36 @@ tr:hover {
     margin-right: 8px;
     font-size: 16px;
 }
+.dashboard-view {
+  background-color: #92aec7; /* Bootstrap red */
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  text-decoration: none;
+  margin-right: 8px;
+  font-size: 16px;
+}
 
-
+.viewHeader{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.viewBackbtn{
+  background-color: #92aec7; /* Bootstrap red */
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  text-decoration: none;
+  margin-right: 8px;
+  font-size: 16px;
+}
 .dashboard-button {
     background-color: #dc3545; /* Bootstrap red */
     color: white;

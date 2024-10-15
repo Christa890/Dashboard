@@ -6,6 +6,7 @@ type Dashboard = {
   name: string;
   dateCreated: string;
   layout: any;
+  screenshot?:string
 };
 
 const Home: React.FC = () => {
@@ -27,35 +28,6 @@ const Home: React.FC = () => {
       localStorage.setItem("dashboards", JSON.stringify(updatedDashboards));
     }
   };
-  const getIconsForDashboard = (layout: any[]) => {
-    const chartTypes = layout.map((chart) => chart.chartType);
-    const uniqueChartTypes = Array.from(new Set(chartTypes)); // To avoid duplicate chart icons
-  
-    let icons = [];
-  
-    for (const chartType of uniqueChartTypes) {
-      switch (chartType) {
-        case 'Pie':
-          icons.push('🥧');
-          break;
-        case 'Bar':
-          icons.push('📊');
-          break;
-        case 'Line':
-          icons.push('📈');
-          break;
-        case 'Doughnut':
-          icons.push('🍩');
-          break;
-        default:
-          icons.push('📊'); // Default to bar chart icon
-          break;
-      }
-    }
-  
-    return icons.join(' '); // Return icons as a string separated by spaces
-  };
-  
 
   return (
     <div className="dashboard-container">
@@ -65,7 +37,7 @@ const Home: React.FC = () => {
       <table className="min-w-full bg-white border-collapse dashboard-table">
         <thead>
           <tr>
-            <th className="border px-4 py-2 text-center">Dashboard Icon</th>
+            <th className="border px-4 py-2 text-center">Dashboard Preview</th>
             <th className="border px-4 py-2 text-center">Dashboard Name</th>
             <th className="border px-4 py-2 text-center">Date Created</th>
             <th className="border px-4 py-2 text-center">Actions</th>
@@ -81,10 +53,17 @@ const Home: React.FC = () => {
           ) : (
             dashboards.map((dashboard) => (
               <tr key={dashboard.id} className="dashboard-row">
-                <td className="border px-4 py-2 text-center">
-                  <span className="dashboard-icon">
-                    {getIconsForDashboard(dashboard.layout)}
-                  </span>
+                 <td className="border px-4 py-2 text-center">
+                  {dashboard.screenshot ? (
+                    <img
+                      src={dashboard.screenshot}
+                      alt={`${dashboard.name} Preview`}
+                      className="dashboard-preview"
+                      style={{ width: "40px", height: "40px" }}
+                    />
+                  ) : (
+                    "No Preview Available"
+                  )}
                 </td>
                 <td className="border px-4 py-2 text-center">
                   {dashboard.name}
@@ -98,6 +77,12 @@ const Home: React.FC = () => {
                     className="dashboard-link mr-2"
                   >
                     Edit
+                  </Link>
+                  <Link
+                    to={`/view/${dashboard.id}`}
+                    className="dashboard-view mr-2"
+                  >
+                    view
                   </Link>
                   <button
                     className="dashboard-button"

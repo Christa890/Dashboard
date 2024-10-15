@@ -1,13 +1,17 @@
 import {Doughnut} from 'react-chartjs-2'
 
-function DoughnutChart(){
+interface DoughnutChartProps {
+  data: number[];
+}
+
+function DoughnutChart({ data }: DoughnutChartProps){
     // Data for the doughnut chart
-    const data = {
+    const chartData = {
       labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple'],
       datasets: [
         {
           label: 'Votes',
-          data: [12, 19, 3, 5, 2],
+          data: data.length ? data :[12, 19, 3, 5, 2],
           backgroundColor: [
             'rgba(255, 99, 132, 0.2)',
             'rgba(54, 162, 235, 0.2)',
@@ -26,7 +30,7 @@ function DoughnutChart(){
         },
       ],
     };
-    return <Doughnut data={data} />;
+    return <Doughnut data={chartData} />;
 
 }
 

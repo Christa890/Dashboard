@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './components/Home';
 import DashboardCreator from './components/DashboardCreator';
+import DashboardView from './components/DashboardView';
 
 // App.tsx
 const App: React.FC = () => {
@@ -12,6 +13,7 @@ const App: React.FC = () => {
           <Route path="/" element={<Home />} />
           <Route path="/create" element={<DashboardCreator />} />
           <Route path="/edit/:id" element={<DashboardCreator />} />
+          <Route path="/view/:id" element={<DashboardView />} />
         </Routes>
       </div>
     </Router>

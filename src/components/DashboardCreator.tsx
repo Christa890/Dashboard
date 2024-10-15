@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import GridLayout, { Layout } from "react-grid-layout";
 import { useNavigate, useParams } from "react-router-dom";
 import "chart.js/auto";
@@ -9,26 +9,34 @@ import DoughnutChart from "./charts/DoughnutChart";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 import "../styles/style.css";
+import html2canvas from "html2canvas";
+import ChartDataModal from "./ChartDataModal";
 
 type Dashboard = {
   id: string;
   name: string;
   dateCreated: string;
   layout: any;
+  screenshot?:string
 };
 
 interface ChartLayout extends Layout {
   chartType: string;
+  chartData: number[];
 }
 //const [isDraggable, setIsDraggable] = useState(true);
 const DashboardCreator: React.FC = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const [layout, setLayout] = useState<ChartLayout[]>([
-    { i: "chart-1", x: 0, y: 0, w: 4, h: 4, chartType: "Pie" },
-    { i: "chart-2", x: 4, y: 0, w: 4, h: 4, chartType: "Bar" },
-  ]);
+  const [layout, setLayout] = useState<ChartLayout[]>([]);
+   // { i: "chart-1", x: 0, y: 0, w: 4, h: 4, chartType: "Pie" },
+   // { i: "chart-2", x: 4, y: 0, w: 4, h: 4, chartType: "Bar" },
+ 
   const [name, setName] = useState("");
+  const [showModal, setShowModal] = useState(false); // State to control modal visibility
+  const [selectedChartType, setSelectedChartType] = useState(""); // Selected chart type
+  const [chartData, setChartData] = useState<number[]>([]); // Store data from modal
+  const dashboardRef = useRef<HTMLDivElement>(null); 
 
   useEffect(() => {
     if (id) {
@@ -42,13 +50,22 @@ const DashboardCreator: React.FC = () => {
       }
     }
   }, [id]);
+  const captureScreenshot = async () => {
+    if (dashboardRef.current) {
+      const canvas = await html2canvas(dashboardRef.current);
+      return canvas.toDataURL("image/png");
+    }
+    return null;
+  };
 
-  const saveDashboard = () => {
+  const saveDashboard = async () => {
+    const screenshot = await captureScreenshot()
     const newDashboard = {
       id: id || String(Date.now()),
       name,
       dateCreated: new Date().toLocaleDateString(),
       layout,
+      screenshot,
     };
       // Check if name is empty
   if (!name.trim()) {
@@ -92,21 +109,40 @@ const DashboardCreator: React.FC = () => {
     navigate("/");
   };
 
-  const [chartType, setChartType] = useState(""); // Default chart selection
+ // const [chartType, setChartType] = useState(""); // Default chart selection
 
   // Function to add a new chart to the layout
+  // const addChart = () => {
+  //   if (!chartType) {
+  //     alert("Please select a chart type!");
+  //     return; // Prevent adding a chart if no type is selected
+  //   }
+  //   const newChartId = `chart-${layout.length + 1}`;
+  //   setLayout([
+  //     ...layout,
+  //     { i: newChartId, x: 0, y: 0, w: 6, h: 4, chartType },
+  //   ]);
+  //   setChartType("");
+  // };
+
+
   const addChart = () => {
-    if (!chartType) {
+    if (!selectedChartType) {
       alert("Please select a chart type!");
       return; // Prevent adding a chart if no type is selected
     }
+    setShowModal(true); // Open the modal to enter data
+  };
+
+
+  const handleSaveChartData = (data: number[]) => {
     const newChartId = `chart-${layout.length + 1}`;
     setLayout([
       ...layout,
-      { i: newChartId, x: 0, y: 0, w: 6, h: 4, chartType },
+      { i: newChartId, x: 0, y: 0, w: 6, h: 4, chartType: selectedChartType, chartData: data },
     ]);
-    setChartType("");
   };
+
 
   // Function to remove chart from layout
   const removeChart = (chartId: string) => {
@@ -114,29 +150,35 @@ const DashboardCreator: React.FC = () => {
   };
 
   const handleLayoutChange = (newLayout: Layout[]) => {
-    const updatedLayout = newLayout.map((item) => {
-      const existingChart = layout.find((l) => l.i === item.i);
-      return {
-        ...item,
-        chartType: existingChart?.chartType || "Pie", // Retain the existing chart type or default to 'Pie'
-      };
+    const updatedLayout = layout.map((chartLayout) => {
+      const updatedItem = newLayout.find((item) => item.i === chartLayout.i);
+      return updatedItem
+        ? {
+            ...chartLayout,
+            x: updatedItem.x,
+            y: updatedItem.y,
+            w: updatedItem.w,
+            h: updatedItem.h,
+          }
+        : chartLayout;
     });
+  
     setLayout(updatedLayout);
   };
 
   // Dynamically render the chart based on the type
-  const renderChart = (chartType: string) => {
+  const renderChart = (chartType: string, data: number[]) => {
     switch (chartType) {
       case "Pie":
-        return <PieChart />;
+        return <PieChart data={data} />;
       case "Bar":
-        return <BarChart />;
+        return <BarChart data={data}/>;
       case "Line":
-        return <LineChart />;
+        return <LineChart data={data}/>;
       case "Doughnut":
-        return <DoughnutChart />;
+        return <DoughnutChart data={data}/>;
       default:
-        return <PieChart />;
+        return <PieChart data={data}/>;
     }
   };
   return (
@@ -155,8 +197,8 @@ const DashboardCreator: React.FC = () => {
           <div className="select-container">
             <select
               id="chartType"
-              value={chartType}
-              onChange={(e) => setChartType(e.target.value)}
+              value={selectedChartType}
+              onChange={(e) => setSelectedChartType(e.target.value)}
             >
               <option value="" disabled>
                 Select Chart
@@ -176,6 +218,7 @@ const DashboardCreator: React.FC = () => {
           Save Dashboard
         </button>
       </div>
+      <div ref={dashboardRef}>
       <GridLayout
         className="layout border-2 border-gray-300 rounded-lg p-4 bg-gray-50"
         layout={layout}
@@ -201,10 +244,20 @@ const DashboardCreator: React.FC = () => {
                 &times;
               </button>
             </div>
-            {renderChart(chart.chartType)} {/* Dynamically render chart */}
+            {renderChart(chart.chartType, chart.chartData)} {/* Dynamically render chart */}
           </div>
         ))}
       </GridLayout>
+
+      {/* Render the modal */}
+      {showModal && (
+        <ChartDataModal
+          chartType={selectedChartType}
+          onClose={() => setShowModal(false)}
+          onSave={handleSaveChartData} // Pass the function to save data
+        />
+      )}
+      </div>
     </div>
   );
 };
