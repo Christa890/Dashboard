@@ -23,18 +23,19 @@ const ChartDataModal: React.FC<ChartDataModalProps> = ({ chartType, onClose, onS
         return (
           <>
             <input
-              className="w-full p-2 border border-gray-300 rounded mb-4"
+            className="modalInput"
               type="number"
               placeholder="Value for January"
               onChange={(e) => handleInputChange(0, e.target.value)}
             />
             <input
-              className="w-full p-2 border border-gray-300 rounded mb-4"
+              className="modalInput"
               type="number"
               placeholder="Value for February"
               onChange={(e) => handleInputChange(1, e.target.value)}
             />
             <input
+            className="modalInput"
               type="number"
               placeholder="Value for March"
               onChange={(e) => handleInputChange(2, e.target.value)}
@@ -46,16 +47,19 @@ const ChartDataModal: React.FC<ChartDataModalProps> = ({ chartType, onClose, onS
         return (
           <>
             <input
+            className="modalInput"
               type="number"
               placeholder="Value for Red"
               onChange={(e) => handleInputChange(0, e.target.value)}
             />
             <input
+            className="modalInput"
               type="number"
               placeholder="Value for Blue"
               onChange={(e) => handleInputChange(1, e.target.value)}
             />
             <input
+            className="modalInput"
               type="number"
               placeholder="Value for Yellow"
               onChange={(e) => handleInputChange(2, e.target.value)}
@@ -63,11 +67,13 @@ const ChartDataModal: React.FC<ChartDataModalProps> = ({ chartType, onClose, onS
             {chartType === "Doughnut" && (
               <>
                 <input
+                className="modalInput"
                   type="number"
                   placeholder="Value for Green"
                   onChange={(e) => handleInputChange(3, e.target.value)}
                 />
                 <input
+                className="modalInput"
                   type="number"
                   placeholder="Value for Purple"
                   onChange={(e) => handleInputChange(4, e.target.value)}
@@ -99,13 +105,13 @@ return (
         {renderInputs()}
         <div className="flex justify-end space-x-4">
           <button
-            className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+            className="modalCancelBtn"
             onClick={onClose}
           >
             Cancel
           </button>
           <button
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+            className="modalSaveBtn"
             onClick={() => { onSave(data); onClose(); }}
           >
             Save

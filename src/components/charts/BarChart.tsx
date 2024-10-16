@@ -5,12 +5,13 @@ interface BarChartProps {
 }
 
 function BarChart({ data }: BarChartProps) {
+  
     const chartData = {
       labels: ["January", "February", "March"],
       datasets: [
         {
           label: "Sales",
-          data: data.length ? data : [12, 19, 3],
+          data: data,
           backgroundColor: ["rgba(255, 99, 132, 0.2)"],
           borderColor: ["rgba(255, 99, 132, 1)"],
           borderWidth: 1,

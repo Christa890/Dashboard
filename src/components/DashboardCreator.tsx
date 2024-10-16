@@ -136,11 +136,17 @@ const DashboardCreator: React.FC = () => {
 
 
   const handleSaveChartData = (data: number[]) => {
-    const newChartId = `chart-${layout.length + 1}`;
-    setLayout([
-      ...layout,
-      { i: newChartId, x: 0, y: 0, w: 6, h: 4, chartType: selectedChartType, chartData: data },
-    ]);
+    if(data.length===0){
+     return alert("No data entered. Please enter values.")
+    }
+    else{
+      const newChartId = `chart-${layout.length + 1}`;
+      setLayout([
+        ...layout,
+        { i: newChartId, x: 0, y: 0, w: 6, h: 4, chartType: selectedChartType, chartData: data },
+      ]);
+    }
+    
   };
 
 
