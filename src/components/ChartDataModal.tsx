@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/style.css";
 
 interface ChartDataModalProps {
@@ -9,6 +9,10 @@ interface ChartDataModalProps {
 
 const ChartDataModal: React.FC<ChartDataModalProps> = ({ chartType, onClose, onSave }) => {
   const [data, setData] = useState<number[]>([]);
+
+  useEffect(() => {
+    setData([]);
+  }, [chartType]);
 
   const handleInputChange = (index: number, value: string) => {
     const newData = [...data];
@@ -25,18 +29,21 @@ const ChartDataModal: React.FC<ChartDataModalProps> = ({ chartType, onClose, onS
             <input
             className="modalInput"
               type="number"
+              value={data[0] || ''}
               placeholder="Value for January"
               onChange={(e) => handleInputChange(0, e.target.value)}
             />
             <input
               className="modalInput"
               type="number"
+              value={data[1] || ''}
               placeholder="Value for February"
               onChange={(e) => handleInputChange(1, e.target.value)}
             />
             <input
             className="modalInput"
               type="number"
+              value={data[2] || ''}
               placeholder="Value for March"
               onChange={(e) => handleInputChange(2, e.target.value)}
             />
@@ -49,18 +56,21 @@ const ChartDataModal: React.FC<ChartDataModalProps> = ({ chartType, onClose, onS
             <input
             className="modalInput"
               type="number"
+              value={data[0] || ''}
               placeholder="Value for Red"
               onChange={(e) => handleInputChange(0, e.target.value)}
             />
             <input
             className="modalInput"
               type="number"
+              value={data[1] || ''}
               placeholder="Value for Blue"
               onChange={(e) => handleInputChange(1, e.target.value)}
             />
             <input
             className="modalInput"
               type="number"
+              value={data[2] || ''}
               placeholder="Value for Yellow"
               onChange={(e) => handleInputChange(2, e.target.value)}
             />
@@ -69,12 +79,14 @@ const ChartDataModal: React.FC<ChartDataModalProps> = ({ chartType, onClose, onS
                 <input
                 className="modalInput"
                   type="number"
+                  value={data[3] || ''}
                   placeholder="Value for Green"
                   onChange={(e) => handleInputChange(3, e.target.value)}
                 />
                 <input
                 className="modalInput"
                   type="number"
+                  value={data[4] || ''}
                   placeholder="Value for Purple"
                   onChange={(e) => handleInputChange(4, e.target.value)}
                 />
